@@ -1,25 +1,47 @@
-RecipeExtract is a utility mod that helps you extract and export game data to JSON files. It provides a simple command to export recipes, shimmer transformations, shop items, and NPC drops.
+RecipeExtract - A Terraria mod that extracts and exports game data to JSON files.
 
 Features:
-- Export all crafting recipes with ingredients, required stations, and conditions
-- Export shimmer transformation data
-- Export NPC shop inventories with prices and conditions
-- Export NPC drop tables with drop rates and conditions
-- All data is exported in UTF-8 encoded JSON format for easy parsing
-- Data files are saved in the mod's directory under your save folder
+- Item Export: Exports all item data including ID, name, stack size, mod name, and textures
+- Recipe Export: Exports all crafting recipes including result items, ingredients, stations, and conditions
+- Shimmer Export: Exports all shimmer transformation data including source items, results, and special cases
+- Shop Export: Exports all NPC shop data including NPC info, available items, prices, and conditions
+- Drop Export: Exports all NPC drop data including NPC info, droppable items, rates, and conditions
 
 Usage:
-1. Type "/RecipeExtract" in the chat to export all data
-2. Check the mod's directory in your save folder for the exported JSON files:
+1. Type /RecipeExtract in the chat
+2. The mod will export the following files to your save folder:
+   - ItemTextures/: Directory containing all item textures
+   - Items.json: All item data
    - Recipes.json: All crafting recipes
    - Shimmers.json: All shimmer transformations
    - Shops.json: All NPC shop inventories
    - Drops.json: All NPC drop tables
 
-The exported data can be used for:
-- Creating wikis or documentation
-- Building tools and applications
-- Analyzing game mechanics
-- Data mining and research
+Dependencies:
+- tModLoader v1.4.4 or later
+- Newtonsoft.Json
 
-Note: This mod requires tModLoader v1.4.4 or later.
+----------------------------------------
+
+RecipeExtract - 一个用于提取和导出游戏数据到JSON文件的Terraria模组。
+
+功能特性：
+- 物品导出：导出所有物品数据，包括物品ID、名称、堆叠数量、模组名称和物品纹理
+- 配方导出：导出所有制作配方，包括成品物品、所需材料、制作站和制作条件
+- 微光转换导出：导出所有微光转换数据，包括源物品、转换结果和特殊情况
+- 商店导出：导出所有NPC商店数据，包括商店NPC信息、可用物品、价格和购买条件
+- 掉落物导出：导出所有NPC掉落数据，包括NPC信息、可掉落物品、掉落率和条件
+
+使用方法：
+1. 在游戏中输入 /RecipeExtract 命令
+2. 模组将在存档文件夹中导出以下文件：
+   - ItemTextures/：物品纹理目录
+   - Items.json：物品数据
+   - Recipes.json：制作配方
+   - Shimmers.json：微光转换
+   - Shops.json：商店数据
+   - Drops.json：掉落数据
+
+依赖项：
+- tModLoader v1.4.4 或更高版本
+- Newtonsoft.Json

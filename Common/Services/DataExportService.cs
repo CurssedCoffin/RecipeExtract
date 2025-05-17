@@ -7,9 +7,11 @@ using System.Text;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using RecipeExtract.Common.Models;
 using RecipeExtract.Common.Utils;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace RecipeExtract.Common.Services
 {
@@ -27,6 +29,7 @@ namespace RecipeExtract.Common.Services
         /// </summary>
         public void ExportData()
         {
+            ExportItemData();
             ExportRecipeData();
             ExportShimmerData();
             ExportShopData();
@@ -36,7 +39,7 @@ namespace RecipeExtract.Common.Services
         /// <summary>
         /// Saves a list of objects to a JSON file
         /// </summary>
-        private void SaveToFile<T>(string fileName, List<T> content)
+        private void SaveListToFile<T>(string fileName, List<T> content)
         {
             try
             {
@@ -53,6 +56,92 @@ namespace RecipeExtract.Common.Services
                 _mod.Logger.Error("Error exporting data: " + ex.ToString());
                 Main.NewText("Error exporting data: " + ex.ToString(), Color.Red);
             }
+        }
+
+        /// <summary>
+        /// Saves an asset to a file
+        /// </summary>
+        private void SaveAssetToFile(Item item, Texture2D asset)
+        {
+            string modName = item.ModItem?.Mod.Name ?? "Terraria";
+            string saveDirectory = Path.Combine(
+                Main.SavePath,
+                "Mods",
+                _mod.Name,
+                "ItemTextures"
+            );
+            string fileName = $"{item.type}_{item.Name.Replace("/", "-")}_{modName.Replace("/", "-")}.png";
+            string filePath = Path.Combine(saveDirectory, fileName);
+            if (!Directory.Exists(saveDirectory)) // make sure folder exists
+            {
+                try
+                {
+                    Directory.CreateDirectory(saveDirectory);
+                }
+                catch (Exception)
+                {
+                    _mod.Logger.Error($"Failed to create directory {saveDirectory}");
+                    Main.NewText($"Failed to create directory {saveDirectory}");
+                    return;
+                }
+            }
+
+            try
+            {
+                using FileStream stream = new(filePath, FileMode.Create);
+                asset.SaveAsPng(stream, asset.Width, asset.Height);
+                stream.Close();
+            }
+            catch (Exception e)
+            {
+                _mod.Logger.Error($"Failed to save item {item.type} to {filePath}, {e.Message}");
+                Main.NewText($"Failed to save item {item.type} to {filePath}, {e.Message}");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Exports all items data to a JSON file, and assets to a folder
+        /// </summary>
+        public void ExportItemData()
+        {
+            List<MyItem> allItems = [];
+            int totalItems = ItemLoader.ItemCount;
+            int failedItems = 0;
+
+            for (int i = 1; i < totalItems; i++)
+            {
+                Item item = new();
+                item.SetDefaults(i);
+                if (item == null || item.type == ItemID.None)
+                {
+                    continue;
+                }
+                Main.instance.LoadItem(i);
+                Texture2D asset = TextureAssets.Item[i].Value;
+
+                if (asset == null || asset.IsDisposed || asset.Width == 0 || asset.Height == 0 || asset == TextureAssets.Item[ItemID.None].Value)
+                {
+                    failedItems++;
+                }
+                else
+                {
+                    SaveAssetToFile(item, asset);
+                }
+
+                if (i % 500 == 0 || i == totalItems - 1)
+                {
+                    _mod.Logger.Info($"Exporting assets for {i} / {totalItems} to {_mod.Name}/ItemTextures.");
+                    Main.NewText($"Exporting assets for {i} / {totalItems} to {_mod.Name}/ItemTextures.");
+                }
+
+                MyItem currentItem = GameDataUtils.GetMyItemByItem(item);
+                allItems.Add(currentItem);
+            }
+
+            _mod.Logger.Info($"Exported {totalItems - failedItems} / {totalItems} assets to {_mod.Name}/ItemTextures, {failedItems} failed.");
+            Main.NewText($"Exported {totalItems - failedItems} / {totalItems} assets to {_mod.Name}/ItemTextures, {failedItems} failed.", Color.Green);
+            SaveListToFile("Items.json", allItems);
         }
 
         /// <summary>
@@ -103,7 +192,7 @@ namespace RecipeExtract.Common.Services
                 allRecipes.Add(currentRecipe);
             }
 
-            SaveToFile("Recipes.json", allRecipes);
+            SaveListToFile("Recipes.json", allRecipes);
         }
 
         /// <summary>
@@ -141,7 +230,7 @@ namespace RecipeExtract.Common.Services
                 allShimmers.Add(currentShimmer);
             }
 
-            SaveToFile("Shimmers.json", allShimmers);
+            SaveListToFile("Shimmers.json", allShimmers);
         }
 
         /// <summary>
@@ -189,7 +278,7 @@ namespace RecipeExtract.Common.Services
                 allShops.Add(currentShop);
             }
 
-            SaveToFile("Shops.json", allShops);
+            SaveListToFile("Shops.json", allShops);
         }
 
         /// <summary>
@@ -284,7 +373,7 @@ namespace RecipeExtract.Common.Services
                 allDrops.Add(currentDrop);
             }
 
-            SaveToFile("Drops.json", allDrops);
+            SaveListToFile("Drops.json", allDrops);
         }
     }
 } 

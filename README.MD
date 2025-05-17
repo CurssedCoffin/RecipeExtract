@@ -1,8 +1,15 @@
 # RecipeExtract
 
-A Terraria mod that extracts and exports game data to JSON files. This mod provides a simple way to export recipes, shimmer transformations, shop items, and NPC drops for data analysis and tool development.
+A Terraria mod that extracts and exports game data to JSON files. This mod provides a simple way to export recipes, shimmer transformations, shop items, NPC drops, and item textures for data analysis and tool development.
 
 ## Features
+
+- **Item Export**: Exports all item data including:
+  - Item ID
+  - Item name
+  - Stack size
+  - Mod name
+  - Item textures (as PNG files)
 
 - **Recipe Export**: Exports all crafting recipes including:
   - Resulting items
@@ -38,6 +45,11 @@ The mod uses several data models to represent game data:
   - Item ID
   - Item name
   - Stack size
+  - Mod name
+
+- `MyNPC`: NPC information
+  - NPC ID
+  - NPC name
   - Mod name
 
 - `MyTile`: Crafting station information
@@ -94,49 +106,30 @@ RecipeExtract/
 1. Install the mod through tModLoader
 2. In-game, type `/RecipeExtract` in the chat
 3. The mod will export the following files to your save folder:
-   - `Recipes.json`: All crafting recipes
-   - `Shimmers.json`: All shimmer transformations
-   - `Shops.json`: All NPC shop inventories
-   - `Drops.json`: All NPC drop tables
+  - `ItemTextures/`: Directory containing all item textures as PNG files
+  - `Items.json`: All item data
+  - `Recipes.json`: All crafting recipes
+  - `Shimmers.json`: All shimmer transformations
+  - `Shops.json`: All NPC shop inventories
+  - `Drops.json`: All NPC drop tables
 
 ## Output Format
 
 All data is exported in UTF-8 encoded JSON format with proper indentation for readability. The JSON structure follows the data models described above.
 
-Example recipe JSON:
+Example item JSON:
 ```json
 {
-  "item": {
-    "itemId": 1,
-    "itemName": "Wooden Sword",
-    "itemAmount": 1,
-    "ModName": "Terraria"
-  },
-  "ingredients": [
-    {
-      "itemId": 9,
-      "itemName": "Wood",
-      "itemAmount": 7,
-      "ModName": "Terraria"
-    }
-  ],
-  "tiles": [
-    {
-      "tileId": 16,
-      "tileName": "Work Bench"
-    }
-  ],
-  "conditions": []
+  "itemId": 1,
+  "itemName": "Iron Pickaxe",
+  "itemAmount": 1,
+  "ModName": "Terraria"
 }
 ```
 
 ## Contributing
 
 Feel free to submit issues and pull requests. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 

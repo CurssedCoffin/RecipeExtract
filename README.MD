@@ -1,3 +1,5 @@
+[中文版](README_CN.MD) | [English Version](README.MD)
+
 # RecipeExtract
 
 A Terraria mod that extracts and exports game data to JSON files. This mod provides a simple way to export recipes, shimmer transformations, shop items, NPC drops, and item textures for data analysis and tool development.

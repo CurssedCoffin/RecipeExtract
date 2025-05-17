@@ -1,3 +1,5 @@
+[English Version](README.MD) | [中文版](README_CN.MD)
+
 # RecipeExtract
 
 一个用于提取和导出游戏数据到JSON文件的Terraria模组。该模组提供了一种简单的方式来导出配方、微光转换、商店物品、NPC掉落物和物品纹理，用于数据分析和工具开发。

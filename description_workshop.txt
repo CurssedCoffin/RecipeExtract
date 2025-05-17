@@ -1,0 +1,25 @@
+RecipeExtract is a utility mod that helps you extract and export game data to JSON files. It provides a simple command to export recipes, shimmer transformations, shop items, and NPC drops.
+
+Features:
+- Export all crafting recipes with ingredients, required stations, and conditions
+- Export shimmer transformation data
+- Export NPC shop inventories with prices and conditions
+- Export NPC drop tables with drop rates and conditions
+- All data is exported in UTF-8 encoded JSON format for easy parsing
+- Data files are saved in the mod's directory under your save folder
+
+Usage:
+1. Type "/RecipeExtract" in the chat to export all data
+2. Check the mod's directory in your save folder for the exported JSON files:
+   - Recipes.json: All crafting recipes
+   - Shimmers.json: All shimmer transformations
+   - Shops.json: All NPC shop inventories
+   - Drops.json: All NPC drop tables
+
+The exported data can be used for:
+- Creating wikis or documentation
+- Building tools and applications
+- Analyzing game mechanics
+- Data mining and research
+
+Note: This mod requires tModLoader v1.4.4 or later.

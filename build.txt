@@ -1,0 +1,3 @@
+displayName = RecipeExtract
+author = CurssedCoffin
+version = 0.1
